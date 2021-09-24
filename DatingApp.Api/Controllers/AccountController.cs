@@ -1,10 +1,12 @@
-using DatingApp.Api.Data;
 using DatingApp.Api.Entities;
-using Microsoft.AspNetCore.Mvc;
+using DatingApp.Api.Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Cryptography;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,12 +15,15 @@ namespace DatingApp.Api.Controllers
     public class AccountController : BaseAPIController
     {
         private readonly DataContext _context;
-        public AccountController(DataContext context)
+        private readonly ITokenService _tokenService;
+
+        public AccountController(DataContext context, ITokenService TokenService)
         {
             _context = context;
+            _tokenService = TokenService;
         }
         [HttpPost("register")]
-        public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             // Ejecutar el método Dispose de la clase que estoy instanciando
             //HMACSHA512 implementa la interfaz IDisposable
@@ -37,11 +42,15 @@ namespace DatingApp.Api.Controllers
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            return user;
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user);
+            };
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
             
@@ -55,6 +64,12 @@ namespace DatingApp.Api.Controllers
             {
                 if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Username or Password");
             }
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user);
+            };
         }
 
         #region Private methods
