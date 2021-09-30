@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DatingApp.Api.Controllers
 {
-    public class AccountController : BaseAPIController
+    public class AccountController : BaseApiController
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
@@ -30,7 +30,7 @@ namespace DatingApp.Api.Controllers
             {
                 return BadRequest("Username is already taken");
             }
-            // Ejecutar el mÃ©todo Dispose de la clase que estoy instanciando
+            // Ejecutar el método Dispose de la clase que estoy instanciando
             //HMACSHA512 implementa la interfaz IDisposable
             // Otras clases que implementan IDisposable: todas las que generan conexiones a BD o archivos.
             using var hmac = new HMACSHA512();
