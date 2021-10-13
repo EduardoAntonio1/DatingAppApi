@@ -1,41 +1,28 @@
-using DatingApp.Api.Data;
-using DatingApp.Api.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
-namespace DatingApp.Api.Controllers
+namespace DatingApp.Api.Extensions
 {
-    
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public static class IdentityServiceExtensions
     {
-        private readonly DataContext _context;
-
-        public UsersController(DataContext context)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            _context = context;
-        }
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
-
-        [Authorize]
-        [HttpGet("{Id}")]
-        [Route("{Id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
-        {
-            return await _context.Users.FindAsync(id);
+            return services;
         }
     }
 }
