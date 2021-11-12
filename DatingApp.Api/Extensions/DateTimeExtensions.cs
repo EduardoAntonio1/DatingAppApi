@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace DatingApp.Api.Extensions
 {
@@ -11,7 +8,7 @@ namespace DatingApp.Api.Extensions
         {
             var today = DateTime.Today;
             var age = today.Year - dob.Year;
-            if(dob.Date > today.AddYears(-age)) age--;
+            if (dob.Date > today.AddYears(-age)) age--;
 
             return age;
         }
