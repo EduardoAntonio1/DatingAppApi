@@ -37,7 +37,7 @@ namespace DatingApp.Api.Controllers
                 .ToListAsync();
             return Ok(users);
         }
-
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("edit-roles/{username}")]
         public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
         {
@@ -63,7 +63,7 @@ namespace DatingApp.Api.Controllers
         [HttpGet("photos-to-moderate")]
         public async Task<ActionResult> GetPhotosForModeration()
         {
-            return Ok("ADmins or moderators can see this");
+            return Ok("Admins or moderators can see this");
         }
     }
 }

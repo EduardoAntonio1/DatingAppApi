@@ -32,7 +32,7 @@ namespace DatingApp.Api.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if (string.IsNullOrEmpty(registerDto.Username)) return BadRequest("User Name is already Taken");
+            //if (string.IsNullOrEmpty(registerDto.Username)) return BadRequest("User Name is already Taken");
             if (await UserExists(registerDto.Username)) return BadRequest("User Name is already Taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
