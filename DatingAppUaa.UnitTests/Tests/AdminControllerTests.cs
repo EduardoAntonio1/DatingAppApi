@@ -32,7 +32,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "admin", "Pa$$w0rd")]
-        public async Task GetUsersWithRoles_OK(string statusCode, string username, string password)
+        public async Task getUsersWithRolesOK(string statusCode, string username, string password)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -51,7 +51,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "admin", "Pa$$w0rd","lisa","Moderator,Member")]
-        public async Task EditRoles_OK(string statusCode, string username, string password,string user2,string roles)
+        public async Task editRolesOK(string statusCode, string username, string password,string user2,string roles)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -72,7 +72,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "admin", "Pa$$w0rd")]
-        public async Task GetPhotosForModeration_OK(string statusCode, string username, string password)
+        public async Task getPhotosForModerationOK(string statusCode, string username, string password)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -89,7 +89,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
 
         #region Privated methods
-        private static string GetRegisterObject(string roles)
+        private static string getRegisterObject(string roles)
         {
             var entityObject = new JObject()
             {
@@ -97,7 +97,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
             };
             return entityObject.ToString();
         }
-        private StringContent GetHttpContent(string objectToEncode)
+        private StringContent getHttpContent(string objectToEncode)
         {
             return new StringContent(objectToEncode, Encoding.UTF8, "application/json");
         }

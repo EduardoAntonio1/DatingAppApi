@@ -36,7 +36,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "lois", "Pa$$w0rd")]
-        public async Task GetUsersNoPagination_OK(string statusCode, string username, string password)
+        public async Task getUsersNoPaginationOK(string statusCode, string username, string password)
         {
             // Arrange
             _client.DefaultRequestHeaders.Authorization = null;
@@ -54,7 +54,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "lois", "Pa$$w0rd",1,10)]
-        public async Task GetUsersWithPagination_OK(string statusCode, string username, string password, int pageSize, int pageNumber)
+        public async Task getUsersWithPaginationOK(string statusCode, string username, string password, int pageSize, int pageNumber)
         {
             // Arrange
             _client.DefaultRequestHeaders.Authorization = null;
@@ -72,7 +72,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "mayo", "Pa$$w0rd")]
-        public async Task GetUserByUsername_OK(string statusCode, string username, string password)
+        public async Task getUserByUsernameOK(string statusCode, string username, string password)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -89,7 +89,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("NoContent", "lisa", "Pa$$w0rd","IntroductionU","LookingForU","InterestsU","CityU","CountryU")]
-        public async Task UpdateUser_NoContent(string statusCode, string username, string password,string introduction,string lookingFor,string interests, string city,string country)
+        public async Task updateUserNoContent(string statusCode, string username, string password,string introduction,string lookingFor,string interests, string city,string country)
         {
             // Arrange
             _client.DefaultRequestHeaders.Authorization = null;
@@ -103,8 +103,8 @@ namespace DatingAppUaa.UnitTests.Pruebas
                 City = city,
                 Country = country
             };
-            registeredObject = GetRegisterObject(memberUpdateDto);
-            httpContent = GetHttpContent(registeredObject);
+            registeredObject = getRegisterObject(memberUpdateDto);
+            httpContent = getHttpContent(registeredObject);
 
             requestUri = $"{apiRoute}";
 
@@ -117,7 +117,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("Created", "admin", "Pa$$w0rd", "a.jpg")]
-        public async Task AddPhoto_Created(string statusCode, string username, string password, string file)
+        public async Task addPhotoCreated(string statusCode, string username, string password, string file)
         {
             // Arrange
             _client.DefaultRequestHeaders.Authorization = null;
@@ -151,7 +151,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("NoContent", "lisa", "Pa$$w0rd", "b.jpg")]
-        public async Task SetMainPhoto_OK(string statusCode, string username, string password, string file)
+        public async Task setMainPhotoOK(string statusCode, string username, string password, string file)
         {
             // Arrange
             _client.DefaultRequestHeaders.Authorization = null;
@@ -194,7 +194,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "karen", "Pa$$w0rd","c.jpg")]
-        public async Task DeletePhoto_OK(string statusCode, string username, string password,string file)
+        public async Task deletePhotoOK(string statusCode, string username, string password,string file)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -235,7 +235,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("NotFound", "davis", "Pa$$w0rd", "20")]
-        public async Task DeletePhoto_NotFound(string statusCode, string username, string password, string id)
+        public async Task deletePhotoNotFound(string statusCode, string username, string password, string id)
         {
             // Arrange
             _client.DefaultRequestHeaders.Authorization = null;
@@ -254,7 +254,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
         }
 
         #region Privated methods
-        private static string GetRegisterObject(MemberUpdateDto memberUpdateDto)
+        private static string getRegisterObject(MemberUpdateDto memberUpdateDto)
         {
             var entityObject = new JObject()
             {
@@ -266,7 +266,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
             };
             return entityObject.ToString();
         }
-        private static string GetRegisterObject(string file)
+        private static string getRegisterObject(string file)
         {
             var entityObject = new JObject()
             {
@@ -274,7 +274,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
             };
             return entityObject.ToString();
         }
-        private StringContent GetHttpContent(string objectToEncode)
+        private StringContent getHttpContent(string objectToEncode)
         {
             return new StringContent(objectToEncode, Encoding.UTF8, "application/json");
         }

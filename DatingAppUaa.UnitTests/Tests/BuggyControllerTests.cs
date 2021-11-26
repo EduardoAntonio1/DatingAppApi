@@ -32,7 +32,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "karen", "Pa$$w0rd")]
-        public async Task GetSecret_OK(string statusCode, string username, string password)
+        public async Task getSecretOK(string statusCode, string username, string password)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -49,7 +49,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("NotFound")]
-        public async Task GetNotFound_NotFound(string statusCode)
+        public async Task getNotFoundNotFound(string statusCode)
         {
             // Arrange
             
@@ -65,7 +65,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("InternalServerError")]
-        public async Task GetServerError_ServerError(string statusCode)
+        public async Task getServerErrorServerError(string statusCode)
         {
             // Arrange
 
@@ -81,7 +81,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("BadRequest")]
-        public async Task GetBadRequest_BadRequest(string statusCode)
+        public async Task getBadRequestBadRequest(string statusCode)
         {
             // Arrange
 
@@ -96,7 +96,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
         }
 
         #region Privated methods
-        private static string GetRegisterObject(string roles)
+        private static string getRegisterObject(string roles)
         {
             var entityObject = new JObject()
             {
@@ -104,7 +104,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
             };
             return entityObject.ToString();
         }
-        private StringContent GetHttpContent(string objectToEncode)
+        private StringContent getHttpContent(string objectToEncode)
         {
             return new StringContent(objectToEncode, Encoding.UTF8, "application/json");
         }

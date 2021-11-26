@@ -28,7 +28,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("BadRequest", "lisa", "KnownAs", "Gender", "2000-01-01", "City", "Country", "Password")]
-        public async Task Register_Fail(string statusCode, string username, string knownAs, string gender, DateTime dateOfBirth, string city, string country, string password)
+        public async Task registerFail(string statusCode, string username, string knownAs, string gender, DateTime dateOfBirth, string city, string country, string password)
         {
             // Arrange
             requestUri = $"{apiRoute}/register";
@@ -41,8 +41,8 @@ namespace DatingAppUaa.UnitTests.Pruebas
                 Country = country,
                 Password = password
             };
-            registeredObject = GetRegisterObject(registerDto);
-            httpContent = GetHttpContent(registeredObject);
+            registeredObject = getRegisterObject(registerDto);
+            httpContent = getHttpContent(registeredObject);
 
             // Act
             httpResponse = await _client.PostAsync(requestUri, httpContent);
@@ -54,7 +54,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "arturo", "KnownAs", "Gender", "2000-01-01", "City", "Country", "Pa$$w0rd")]
-        public async Task Register_ReturnOk(string statusCode, string username, string knownAs, string gender, DateTime dateOfBirth, string city, string country, string password)
+        public async Task registerReturnOk(string statusCode, string username, string knownAs, string gender, DateTime dateOfBirth, string city, string country, string password)
         {
             // Arrange
             requestUri = $"{apiRoute}/register";
@@ -68,8 +68,8 @@ namespace DatingAppUaa.UnitTests.Pruebas
                 Country = country,
                 Password = password
             };
-            registeredObject = GetRegisterObject(registerDto);
-            httpContent = GetHttpContent(registeredObject);
+            registeredObject = getRegisterObject(registerDto);
+            httpContent = getHttpContent(registeredObject);
 
             // Act
             httpResponse = await _client.PostAsync(requestUri, httpContent);
@@ -81,7 +81,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("Unauthorized", "lisa","Password")]
-        public async Task Login_Fail(string statusCode, string username, string password)
+        public async Task loginFail(string statusCode, string username, string password)
         {
             // Arrange
             requestUri = $"{apiRoute}/login";
@@ -90,8 +90,8 @@ namespace DatingAppUaa.UnitTests.Pruebas
                 Username = username,
                 Password = password
             };
-            registeredObject = GetRegisterObject(loginDto);
-            httpContent = GetHttpContent(registeredObject);
+            registeredObject = getRegisterObject(loginDto);
+            httpContent = getHttpContent(registeredObject);
 
             // Act
             httpResponse = await _client.PostAsync(requestUri, httpContent);
@@ -103,7 +103,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "lisa", "Pa$$w0rd")]
-        public async Task Login_ReturnOK(string statusCode, string username, string password)
+        public async Task loginReturnOK(string statusCode, string username, string password)
         {
             // Arrange
             requestUri = $"{apiRoute}/login";
@@ -112,8 +112,8 @@ namespace DatingAppUaa.UnitTests.Pruebas
                 Username = username,
                 Password = password
             };
-            registeredObject = GetRegisterObject(loginDto);
-            httpContent = GetHttpContent(registeredObject);
+            registeredObject = getRegisterObject(loginDto);
+            httpContent = getHttpContent(registeredObject);
 
             // Act
             httpResponse = await _client.PostAsync(requestUri, httpContent);
@@ -124,7 +124,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
         }
 
         #region Privated methods
-        private static string GetRegisterObject(RegisterDto registerDto)
+        private static string getRegisterObject(RegisterDto registerDto)
         {
             var entityObject = new JObject()
             {
@@ -140,7 +140,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
             return entityObject.ToString();
         }
 
-        private static string GetRegisterObject(LoginDto loginDto)
+        private static string getRegisterObject(LoginDto loginDto)
         {
             var entityObject = new JObject()
             {
@@ -150,7 +150,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
             return entityObject.ToString();
         }
 
-        private StringContent GetHttpContent(string objectToEncode)
+        private StringContent getHttpContent(string objectToEncode)
         {
             return new StringContent(objectToEncode, Encoding.UTF8, "application/json");
         }

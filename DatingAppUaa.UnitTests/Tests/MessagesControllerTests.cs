@@ -28,7 +28,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
         }
         [Theory]
         [InlineData("BadRequest", "lois", "Pa$$w0rd", "lois","Hola")]
-        public async Task CreateMessage_BadRequest(string statusCode, string username, string password, string recipientUsername,string content)
+        public async Task createMessageBadRequest(string statusCode, string username, string password, string recipientUsername,string content)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -38,8 +38,8 @@ namespace DatingAppUaa.UnitTests.Pruebas
                 RecipientUsername= recipientUsername,
                 Content = content
             };
-            registeredObject = GetRegisterObject(messageDto);
-            httpContent = GetHttpContent(registeredObject);
+            registeredObject = getRegisterObject(messageDto);
+            httpContent = getHttpContent(registeredObject);
             requestUri = $"{apiRoute}";
 
             // Act
@@ -51,7 +51,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
         }
         [Theory]
         [InlineData("NotFound", "lisa", "Pa$$w0rd", "pedritosola", "Hola")]
-        public async Task CreateMessage_NotFound(string statusCode, string username, string password, string recipientUsername, string content)
+        public async Task createMessageNotFound(string statusCode, string username, string password, string recipientUsername, string content)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -62,8 +62,8 @@ namespace DatingAppUaa.UnitTests.Pruebas
                 RecipientUsername = recipientUsername,
                 Content = content
             };
-            registeredObject = GetRegisterObject(messageDto);
-            httpContent = GetHttpContent(registeredObject);
+            registeredObject = getRegisterObject(messageDto);
+            httpContent = getHttpContent(registeredObject);
             requestUri = $"{apiRoute}";
 
             // Act
@@ -75,7 +75,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
         }
         [Theory]
         [InlineData("OK", "porter", "Pa$$w0rd", "lisa", "Hola")]
-        public async Task CreateMessage_OK(string statusCode, string username, string password, string recipientUsername, string content)
+        public async Task createMessageOK(string statusCode, string username, string password, string recipientUsername, string content)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -86,8 +86,8 @@ namespace DatingAppUaa.UnitTests.Pruebas
                 RecipientUsername = recipientUsername,
                 Content = content
             };
-            registeredObject = GetRegisterObject(messageDto);
-            httpContent = GetHttpContent(registeredObject);
+            registeredObject = getRegisterObject(messageDto);
+            httpContent = getHttpContent(registeredObject);
             requestUri = $"{apiRoute}";
 
             // Act
@@ -100,7 +100,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "todd", "Pa$$w0rd", "ruthie", "Hola")]
-        public async Task GetMessagesForUser_OK(string statusCode, string username, string password, string recipientUsername, string content)
+        public async Task getMessagesForUserOK(string statusCode, string username, string password, string recipientUsername, string content)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -118,7 +118,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "skinner", "Pa$$w0rd", "Outbox")]
-        public async Task GetMessagesForUserFromQuery_OK(string statusCode, string username, string password, string container)
+        public async Task getMessagesForUserFromQueryOK(string statusCode, string username, string password, string container)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -136,7 +136,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "ruthie", "Pa$$w0rd", "lisa")]
-        public async Task GetMessagesThread_OK(string statusCode, string username, string password, string user2)
+        public async Task getMessagesThreadOK(string statusCode, string username, string password, string user2)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -155,7 +155,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "davis", "Pa$$w0rd", "karen", "Hola")]
-        public async Task DeleteMessage_OK(string statusCode, string username, string password, string recipientUsername, string content)
+        public async Task deleteMessageOK(string statusCode, string username, string password, string recipientUsername, string content)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -166,8 +166,8 @@ namespace DatingAppUaa.UnitTests.Pruebas
                 RecipientUsername = recipientUsername,
                 Content = content
             };
-            registeredObject = GetRegisterObject(messageDto);
-            httpContent = GetHttpContent(registeredObject);
+            registeredObject = getRegisterObject(messageDto);
+            httpContent = getHttpContent(registeredObject);
             requestUri = $"{apiRoute}";
             var result = await _client.PostAsync(requestUri, httpContent);
             var messageJson = await result.Content.ReadAsStringAsync();
@@ -191,7 +191,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("Unauthorized", "mayo", "Pa$$w0rd", "lisa", "Hola", "margo")]
-        public async Task DeleteMessage_Unauthorized(string statusCode, string username, string password, string recipientUsername, string content,string unauth)
+        public async Task deleteMessageUnauthorized(string statusCode, string username, string password, string recipientUsername, string content,string unauth)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -202,8 +202,8 @@ namespace DatingAppUaa.UnitTests.Pruebas
                 RecipientUsername = recipientUsername,
                 Content = content
             };
-            registeredObject = GetRegisterObject(messageDto);
-            httpContent = GetHttpContent(registeredObject);
+            registeredObject = getRegisterObject(messageDto);
+            httpContent = getHttpContent(registeredObject);
             requestUri = $"{apiRoute}";
             var result = await _client.PostAsync(requestUri, httpContent);
             var messageJson = await result.Content.ReadAsStringAsync();
@@ -225,7 +225,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
 
         #region Privated methods
-        private static string GetRegisterObject(MessageDto message)
+        private static string getRegisterObject(MessageDto message)
         {
             var entityObject = new JObject()
             {
@@ -235,7 +235,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
             return entityObject.ToString();
         }
 
-        private StringContent GetHttpContent(string objectToEncode)
+        private StringContent getHttpContent(string objectToEncode)
         {
             return new StringContent(objectToEncode, Encoding.UTF8, "application/json");
         }

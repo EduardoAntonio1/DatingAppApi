@@ -29,7 +29,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("NotFound", "lois", "Pa$$w0rd","a")]
-        public async Task AddLike_NotFound(string statusCode, string username, string password,string userLiked)
+        public async Task addLikeNotFound(string statusCode, string username, string password,string userLiked)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -49,7 +49,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("BadRequest", "lois", "Pa$$w0rd", "lois")]
-        public async Task AddLike_BadRequest(string statusCode, string username, string password, string userLiked)
+        public async Task addLikeBadRequest(string statusCode, string username, string password, string userLiked)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -68,7 +68,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "lois", "Pa$$w0rd", "todd")]
-        public async Task AddLike_OK(string statusCode, string username, string password, string userLiked)
+        public async Task addLikeOK(string statusCode, string username, string password, string userLiked)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -87,7 +87,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("BadRequest", "lois", "Pa$$w0rd", "todd")]
-        public async Task AddLike_BadRequest2(string statusCode, string username, string password, string userLiked)
+        public async Task addLikeBadRequest2(string statusCode, string username, string password, string userLiked)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -108,7 +108,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
 
         [Theory]
         [InlineData("OK", "todd", "Pa$$w0rd")]
-        public async Task GetUserLikes_OK(string statusCode, string username, string password)
+        public async Task getUserLikesOK(string statusCode, string username, string password)
         {
             // Arrange
             var user = await LoginHelper.LoginUser(username, password);
@@ -126,7 +126,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
             Assert.Equal(statusCode, httpResponse.StatusCode.ToString());
         }
         #region Privated methods
-        private static string GetRegisterObject(RegisterDto registerDto)
+        private static string getRegisterObject(RegisterDto registerDto)
         {
             var entityObject = new JObject()
             {
@@ -142,7 +142,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
             return entityObject.ToString();
         }
 
-        private static string GetRegisterObject(LoginDto loginDto)
+        private static string getRegisterObject(LoginDto loginDto)
         {
             var entityObject = new JObject()
             {
@@ -152,7 +152,7 @@ namespace DatingAppUaa.UnitTests.Pruebas
             return entityObject.ToString();
         }
 
-        private StringContent GetHttpContent(string objectToEncode)
+        private StringContent getHttpContent(string objectToEncode)
         {
             return new StringContent(objectToEncode, Encoding.UTF8, "application/json");
         }
